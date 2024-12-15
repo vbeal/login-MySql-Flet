@@ -1,12 +1,16 @@
 # models.py
 
-# Importar módulos necessários do SQLAlchemy
+import os
 from sqlalchemy import Column, Integer, String, create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-
-# Importar a configuração da URI do banco de dados
+from sqlalchemy.orm import declarative_base, sessionmaker
 from config import DATABASE_URI
+
+# Imprimir variáveis de ambiente para depuração
+print("DB_USER:", os.getenv('DB_USER'))
+print("DB_PASSWORD:", os.getenv('DB_PASSWORD'))
+print("DB_HOST:", os.getenv('DB_HOST'))
+print("DB_PORT:", os.getenv('DB_PORT'))
+print("DB_NAME:", os.getenv('DB_NAME'))
 
 # Criar uma instância do engine para conexão com o banco de dados
 engine = create_engine(DATABASE_URI, echo=True)
@@ -28,8 +32,15 @@ class Usuario(Base):
 # Criar a tabela no banco de dados
 Base.metadata.create_all(engine)
 
+# Função para cadastrar novo usuário
+def cadastrar_usuario(username, password):
+    novo_usuario = Usuario(username=username, password=password)
+    session.add(novo_usuario)
+    session.commit()
+    print(f"Usuário {username} cadastrado com sucesso!")
+
 # Testar a conexão
-if engine:
+if __name__ == "__main__":
+    # Cadastrar um novo usuário para teste
+    cadastrar_usuario("usuario_teste", "senha_teste")
     print("Conexão bem-sucedida!")
-else:
-    print("Falha na conexão.")
