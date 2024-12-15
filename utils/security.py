@@ -1,6 +1,10 @@
 # utils/security.py
 
 from passlib.context import CryptContext
+import bcrypt
+
+# Verificar versão do bcrypt
+print(f"Versão do bcrypt: {bcrypt.__version__}")
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
