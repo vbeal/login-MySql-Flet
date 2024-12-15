@@ -1,7 +1,6 @@
 # models.py
 
 import os
-import bcrypt  # Importar bcrypt para hash de senha
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 from config import DATABASE_URI
@@ -28,21 +27,11 @@ class Usuario(Base):
     __tablename__ = 'usuarios'  # Nome da tabela no banco de dados
     id = Column(Integer, primary_key=True)  # Coluna ID, chave primária
     username = Column(String(50), unique=True, nullable=False)  # Coluna username, único e não nulo
-    password = Column(String(60), nullable=False)  # Coluna password, não nulo (tamanho ajustado para hash)
+    password = Column(String(128), nullable=False)  # Coluna password, não nulo (tamanho ajustado para hash)
 
 # Criar a tabela no banco de dados
 Base.metadata.create_all(engine)
 
-# Função para cadastrar novo usuário com senha hash
-def cadastrar_usuario(username, password):
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    novo_usuario = Usuario(username=username, password=hashed_password.decode('utf-8'))
-    session.add(novo_usuario)
-    session.commit()
-    print(f"Usuário {username} cadastrado com sucesso!")
-
 # Testar a conexão
 if __name__ == "__main__":
-    # Cadastrar um novo usuário para teste
-    cadastrar_usuario("usuario_teste", "senha_teste")
     print("Conexão bem-sucedida!")

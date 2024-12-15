@@ -1,11 +1,12 @@
 # app.py
 
 import flet as ft
-import bcrypt  # Importar bcrypt para verificar senha hash
-from models import Usuario, session
+from pages.login import login_page
+from pages.register import register_page
 
 def main(page: ft.Page):
-    page.title = "Login Flet"
+    page.title = "Flet App - Login e Registro"
+    page.theme_mode = ft.ThemeMode.LIGHT  # Define o modo claro
 
     # Função para redirecionar o usuário para a página principal
     def redirect_to_main_page():
@@ -13,46 +14,21 @@ def main(page: ft.Page):
         page.title = "Página Principal"
         welcome_text = ft.Text(value="Bem-vindo à Página Principal!", size=24)
         logout_button = ft.ElevatedButton(
-            text="Logout", 
-            on_click=lambda e: logout()
+            text="Logout",
+            on_click=lambda e: show_login_page()
         )
         page.add(welcome_text, logout_button)
+        page.update()  # Atualiza a página
 
-    # Função de login
-    def login(e):
-        username_input = username.value
-        password_input = password.value
+    # Função para mostrar a página de login
+    def show_login_page(e=None):
+        login_page(page, redirect_to_main_page, show_register_page)
 
-        # Verificar se o usuário existe no banco de dados
-        user = session.query(Usuario).filter_by(username=username_input).first()
-        
-        if user and bcrypt.checkpw(password_input.encode('utf-8'), user.password.encode('utf-8')):
-            login_message.value = "Login bem-sucedido!"
-            login_message.color = ft.colors.GREEN
-            login_message.update()
-            redirect_to_main_page()
-        else:
-            login_message.value = "Login falhou. Tente novamente."
-            login_message.color = ft.colors.RED
-            login_message.update()
+    # Função para mostrar a página de registro
+    def show_register_page(e=None):
+        register_page(page, show_login_page)
 
-    # Função de logout
-    def logout():
-        page.clean()
-        main(page)
-
-    # Campos de entrada e botão de login
-    username = ft.TextField(label="Usuário", autofocus=True)
-    password = ft.TextField(label="Senha", password=True)
-    login_button = ft.ElevatedButton(text="Login", on_click=login)
-    login_message = ft.Text()
-
-    # Adicionar componentes à página
-    page.add(
-        username,
-        password,
-        login_button,
-        login_message
-    )
+    # Mostrar a página de login inicialmente
+    show_login_page()
 
 ft.app(target=main)
