@@ -2,8 +2,9 @@
 
 import flet as ft
 
-def create_footer(footer_style):
+def create_footer():
     return ft.Container(
-        content=ft.Text("© 2024 Meu Aplicativo. Todos os direitos reservados.", size=14),
-        **footer_style
+        content=ft.Text("Rodapé do aplicativo"),
+        padding=10,
+        alignment=ft.alignment.center
     )
