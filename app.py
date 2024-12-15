@@ -1,6 +1,7 @@
 # app.py
 
 import flet as ft
+import bcrypt  # Importar bcrypt para verificar senha hash
 from models import Usuario, session
 
 def main(page: ft.Page):
@@ -23,9 +24,9 @@ def main(page: ft.Page):
         password_input = password.value
 
         # Verificar se o usuário existe no banco de dados
-        user = session.query(Usuario).filter_by(username=username_input, password=password_input).first()
+        user = session.query(Usuario).filter_by(username=username_input).first()
         
-        if user:
+        if user and bcrypt.checkpw(password_input.encode('utf-8'), user.password.encode('utf-8')):
             login_message.value = "Login bem-sucedido!"
             login_message.color = ft.colors.GREEN
             login_message.update()
