@@ -1,0 +1,43 @@
+```
+└── 📁login-MySql-Flet
+    └── 📁assets
+        └── logo.png
+    └── 📁components
+        └── 📁__pycache__
+            └── __init__.cpython-313.pyc
+            └── footer.cpython-313.pyc
+            └── header.cpython-313.pyc
+        └── __init__.py
+        └── footer.py
+        └── header.py
+    └── 📁pages
+        └── 📁__pycache__
+            └── __init__.cpython-313.pyc
+            └── login.cpython-313.pyc
+            └── register.cpython-313.pyc
+        └── __init__.py
+        └── login.py
+        └── register.py
+    └── 📁utils
+        └── 📁__pycache__
+            └── __init__.cpython-313.pyc
+            └── messages.cpython-313.pyc
+            └── security.cpython-313.pyc
+            └── styles.cpython-313.pyc
+        └── __init__.py
+        └── messages.py
+        └── security.py
+        └── styles.py
+    └── .env
+    └── .gitattributes
+    └── .gitignore
+    └── app.py
+    └── config.py
+    └── LICENSE
+    └── models.py
+    └── navigation.py
+    └── README.md
+    └── register_user.py
+    └── theme.json
+    └── theme.py
+```
